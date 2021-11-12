@@ -1,0 +1,14 @@
+rkhozyainov@rkh:~/docker/virt53/task3$ docker run -d -it --rm -v /home/rkhozyainov/docker/virt53/task3/data/:/data --name centos_test centos:8 
+7ab6bf7b2e76a9559f0a3d2d3a84f422fb47eeb37f4c973c34b0192b80a22517
+rkhozyainov@rkh:~/docker/virt53/task3$ docker run -d -it --rm -v /home/rkhozyainov/docker/virt53/task3/data/:/data --name debian_test debian:buster-slim 
+a0b854941307275ab6acd77bc5bc2b71333d95f8f58dff82557c2eab35d08e2d
+rkhozyainov@rkh:~/docker/virt53/task3$ docker exec centos_test touch /data/testfile
+rkhozyainov@rkh:~/docker/virt53/task3$ touch ./data/testfile2
+rkhozyainov@rkh:~/docker/virt53/task3$ docker exec -it debian_test /bin/bash
+root@a0b854941307:/# ls /
+.dockerenv  boot/       dev/        home/       lib64/      mnt/        proc/       run/        srv/        tmp/        var/        
+bin/        data/       etc/        lib/        media/      opt/        root/       sbin/       sys/        usr/        
+root@a0b854941307:/# ls -l /data/
+total 0
+-rw-r--r-- 1 root root 0 Nov  7 12:30 testfile
+-rw-rw-r-- 1 1000 1000 0 Nov  7 12:31 testfile2
