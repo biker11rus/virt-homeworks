@@ -5,8 +5,14 @@
 Дайте письменые ответы на следующие вопросы:
 
 - В чём отличие режимов работы сервисов в Docker Swarm кластере: replication и global?
+  **Ответ**
+  При режиме работы replication указывем какое количество реплик мы хотим запустить, в режиме global задача запускается на каждой ноде 
 - Какой алгоритм выбора лидера используется в Docker Swarm кластере?
+  **Ответ**
+  Raft
 - Что такое Overlay Network?
+  **Ответ**
+  Это подсеть контейнеров для обмена данными внутри класстера 
 
 ## Задача 2
 
@@ -16,6 +22,10 @@
 ```
 docker node ls
 ```
+**Ответ**
+<p align="center">
+  <img width="1012" height="148" src="./assets/screen1.png">
+</p>
 
 ## Задача 3
 
@@ -25,6 +35,10 @@ docker node ls
 ```
 docker service ls
 ```
+**Ответ**
+<p align="center">
+  <img width="1519" height="200" src="./assets/screen2.png">
+</p>
 
 ## Задача 4 (*)
 
@@ -33,4 +47,11 @@ docker service ls
 # см.документацию: https://docs.docker.com/engine/swarm/swarm_manager_locking/
 docker swarm update --autolock=true
 ```
+**Ответ**
+
+Это команда включает блокировку Swarm Manager в запущенном кластере, запрещает манипуляции (запуск просмотр и т.д.) с докером, до разблокировки.
+
+<p align="center">
+  <img width="1517" height="348" src="./assets/screen3.png">
+</p>
 
