@@ -15,6 +15,63 @@
 - вывода описания содержимого таблиц
 - выхода из psql
 
+**Ответ**
+
+```yaml
+version: "3"
+volumes:
+    data:
+services:
+  db:
+    image: postgres:13
+    container_name: db
+    volumes:
+      - data:/var/lib/postgresql/data
+      - ./test_data:/var/lib/backup_postgresql
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+```
+```bash
+rkhozyainov@rkh:~/devops/virt-homeworks/06-db-04-postgresql$ docker-compose up -d
+rkhozyainov@rkh:~/devops/virt-homeworks/06-db-04-postgresql$ psql -h localhost -U postgres -W
+```
+Вывод списка БД
+
+```sql
+postgres-# \l
+```
+
+Подключения к БД
+
+```sql
+postgres-# \c db_name
+```
+
+Вывод списка таблиц
+
+```sql
+postgres-# \d
+```
+
+Вывод описания содержимого таблиц
+
+```sql
+postgres-# \d name_table
+```
+
+Выход из psql
+
+```sql
+postgres-# \q
+```
+
+
 ## Задача 2
 
 Используя `psql` создайте БД `test_database`.
@@ -32,6 +89,31 @@
 
 **Приведите в ответе** команду, которую вы использовали для вычисления и полученный результат.
 
+**Ответ**
+
+Создание пустой базы, восстановление из бекапа и подключение psql
+
+```bash
+rkhozyainov@rkh:~/devops/virt-homeworks/06-db-04-postgresql$ createdb -h localhost -U postgres -W -e test_database
+Password: 
+SELECT pg_catalog.set_config('search_path', '', false);
+CREATE DATABASE test_database;
+rkhozyainov@rkh:~/devops/virt-homeworks/06-db-04-postgresql$ psql -h localhost -U postgres -W test_database < ./test_data/test_dump.sql 
+rkhozyainov@rkh:~/devops/virt-homeworks/06-db-04-postgresql$ psql -h localhost -U postgres -W test_database
+```
+
+Выполнение ANALYZE и поиск столбца
+
+```sql
+test_database=# analyze;
+ANALYZE
+test_database=# SELECT avg_width FROM pg_stats WHERE tablename = 'orders' ORDER BY avg_width DESC limit 1;
+ avg_width 
+-----------
+        16
+(1 row)
+
+```
 ## Задача 3
 
 Архитектор и администратор БД выяснили, что ваша таблица orders разрослась до невиданных размеров и
@@ -42,16 +124,48 @@
 
 Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?
 
+**Ответ**
+
+Секционирование с использованием наследования
+
+```sql
+CREATE table orders_range_inh (like orders);
+CREATE TABLE orders_1_inh (check (price > 500 )) inherits (orders_range_inh);
+CREATE TABLE orders_2_inh (check (price <= 500 )) inherits (orders_range_inh);
+create rule orders1_insert as on insert to orders_range_inh where (price > 500 ) do instead insert into orders_1_inh values (NEW.*);
+create rule orders2_insert as on insert to orders_range_inh where (price <= 499 ) do instead insert into orders_2_inh values (NEW.*);
+insert into orders_range_inh select * from orders;
+```
+
+Декларативное секционирование
+
+```sql
+CREATE TABLE orders_range_part (id INT, title varchar (80), price INT ) PARTITION BY RANGE(price);
+create table orders_1_part partition of orders_range_part for values from (499) to (999999999);
+create table orders_2_part partition of orders_range_part for values from (0) to (499);
+insert into orders_range_part (id, title, price) select * from orders;
+```
+
+Можно было избежать изначально используя секционирование
+
+
 ## Задача 4
 
 Используя утилиту `pg_dump` создайте бекап БД `test_database`.
 
+
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?
 
+
+**Ответ**
+
+```bash
+rkhozyainov@rkh:~/devops/virt-homeworks/06-db-04-postgresql$ docker-compose exec db pg_dump -U postgres test_database > test-backup.sql
+```
+
+Добавил индекс 
+
 ---
 
-### Как cдавать задание
 
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
+					  
