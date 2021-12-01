@@ -1,0 +1,19 @@
+version: "3"
+volumes:
+    data:
+services:
+  db:
+    image: mysql:8
+    #command: mysqld --default-authentication-plugin=mysql_native_password
+    container_name: mysql_db
+    volumes:
+      - data:/var/lib/mysql
+      - ./test_data:/backup
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      #MYSQL_DATABASE: ${MYSQL_DATABASE}
+      #MYSQL_USER: ${MYSQL_USER}
+      #MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    restart: always
