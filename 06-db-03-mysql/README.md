@@ -316,18 +316,28 @@ mysql> SHOW PROFILE;
 
 Измените его согласно ТЗ (движок InnoDB):
 - Скорость IO важнее сохранности данных
-    innodb_ﬂush_log_at_trx_commit = 2
+  
+innodb_ﬂush_log_at_trx_commit = 2
+
 - Нужна компрессия таблиц для экономии места на диске
-    innodb_file_per_table = 1
+  
+innodb_file_per_table = 1
+
 - Размер буффера с незакомиченными транзакциями 1 Мб
-    innodb_log_buffer_size = 1M
+  
+innodb_log_buffer_size = 1M
+
 - Буффер кеширования 30% от ОЗУ
-    ```bash
+  
+```bash
     root@2d6ecfddd94c:/# cat /proc/meminfo | grep MemTotal
     MemTotal:        3636580 kB
-    ```
-    innodb_buffer_pool_size = 1212M
+```
+
+innodb_buffer_pool_size = 1212M
+
 - Размер файла логов операций 100 Мб
-    innodb_log_ﬁle_size = 100M
+  
+innodb_log_ﬁle_size = 100M
 
 ---
