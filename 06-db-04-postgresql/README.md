@@ -163,9 +163,12 @@ insert into orders_range_part (id, title, price) select * from orders;
 rkhozyainov@rkh:~/devops/virt-homeworks/06-db-04-postgresql$ docker-compose exec db pg_dump -U postgres test_database > test-backup.sql
 ```
 
-Добавил индекс 
+Добработка бэкапа
+
+1. Добавить в запрос на создание таблицы test_database к  столбцу title параметр UNIQUE в ручную или через sed
+2. Проверить что вставляемые данные явяются уникальными в данной таблицы можно сделать в ручную, если данных много то что бы избежать ошибок при восстановление, можно добавить ON CONFLICT DO NOTHING, но тогда не уникальные данные не будут добавлены.
 
 ---
 
 
-					  
+​					  
