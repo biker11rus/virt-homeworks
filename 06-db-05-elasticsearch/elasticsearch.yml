@@ -1,0 +1,9 @@
+node.name: netology_test
+path.data: /var/lib/data
+path.logs: /var/log/logs
+path.repo: /elasticsearch-7.15.2/snapshots
+ingest.geoip.downloader.enabled: false
+bootstrap.memory_lock: true
+network.host: 127.0.0.1
+http.host: 0.0.0.0 
+http.port: 9200
