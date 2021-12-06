@@ -240,7 +240,7 @@ rkhozyainov@rkh:~/devops/virt-homeworks/06-db-05-elasticsearch$ curl -X DELETE '
 rkhozyainov@rkh:~/devops/virt-homeworks/06-db-05-elasticsearch$ curl -X DELETE 'http://localhost:9200/ind-1'
 ```
 
-Статус кластера желтный так как укзано количесвто реплик, а сервер всего один. 
+Статус кластера желтый так как указано количесвто реплик в некоторых индексах больше 0, а сервер всего один. 
 
 ## Задача 3
 
@@ -367,8 +367,3 @@ green  open   test   4DdrArYmQMuR72HBhYz20A   1   0          0            0     
 
 ---
 
-### Как cдавать задание
-
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
