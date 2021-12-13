@@ -40,13 +40,44 @@
 
 Если для ответа на эти вопросы недостаточно информации, то напишите какие моменты уточните на совещании.
 
+**Ответ**
 
+1. Какой тип инфраструктуры будем использовать для этого проекта: изменяемый или не изменяемый?
+      
+      Смешанный так как нет четкого ТЗ и будет много изменений
+2. Будет ли центральный сервер для управления инфраструктурой?
+      
+      Постраемся избежать использования центрального сервера, что бы не заниматься его резервировнием и обслуживанием
+3. Будут ли агенты на серверах?
+      
+      Если нет центального сервера, по сути нет необходимости использования агентов
+4. Будут ли использованы средства для управления конфигурацией или инициализации ресурсов?
+      
+      Да, будут и те и другие, terraform  и ansible 
+    
+Какие инструменты из уже используемых вы хотели бы использовать для нового проекта? 
+
+Packer Terraform Ansible Kubernetes Docker
+
+Хотите ли рассмотреть возможность внедрения новых инструментов для этого проекта? 
+     
+Jenkins
+
+   
 ## Задача 2. Установка терраформ. 
 
 Официальный сайт: https://www.terraform.io/
 
 Установите терраформ при помощи менеджера пакетов используемого в вашей операционной системе.
 В виде результата этой задачи приложите вывод команды `terraform --version`.
+
+**Ответ**
+
+```bash
+rkhozyainov@rkh:~$ terraform --version
+Terraform v1.1.0
+on linux_amd64
+```
 
 ## Задача 3. Поддержка легаси кода. 
 
@@ -58,10 +89,38 @@
 В виде результата этой задачи приложите вывод `--version` двух версий терраформа доступных на вашем компьютере 
 или виртуальной машине.
 
----
+**Ответ**
 
-### Как cдавать задание
+```bash
+rkhozyainov@rkh:~$ wget https://releases.hashicorp.com/terraform/0.15.5/terraform_0.15.5_linux_amd64.zip
+--2021-12-13 23:09:46--  https://releases.hashicorp.com/terraform/0.15.5/terraform_0.15.5_linux_amd64.zip
+Распознаётся releases.hashicorp.com (releases.hashicorp.com)... 151.101.1.183, 151.101.65.183, 151.101.129.183, ...
+Подключение к releases.hashicorp.com (releases.hashicorp.com)|151.101.1.183|:443... соединение установлено.
+HTTP-запрос отправлен. Ожидание ответа... 200 OK
+Длина: 33043317 (32M) [application/zip]
+Сохранение в каталог: ««terraform_0.15.5_linux_amd64.zip»».
 
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
+terraform_0.15.5_li 100%[===================>]  31,51M  4,06MB/s    за 7,1s    
 
----
+2021-12-13 23:09:53 (4,44 MB/s) - «terraform_0.15.5_linux_amd64.zip» сохранён [33043317/33043317]
+
+rkhozyainov@rkh:~$ unzip ./terraform_0.15.5_linux_amd64.zip 
+Archive:  ./terraform_0.15.5_linux_amd64.zip
+  inflating: terraform 
+
+rkhozyainov@rkh:~$ sudo mv ./terraform /usr/bin/terraform_0.15
+
+rkhozyainov@rkh:~$ terraform -v
+Terraform v1.1.0
+on linux_amd64
+rkhozyainov@rkh:~$ terraform_0.15 -v
+Terraform v0.15.5
+on linux_amd64
+
+Your version of Terraform is out of date! The latest version
+is 1.1.0. You can update by downloading from https://www.terraform.io/downloads.html
+
+```
+Так же можно использовать tfenv
+
+
