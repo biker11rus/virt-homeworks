@@ -58,5 +58,49 @@ AWS предоставляет достаточно много бесплатн�
 
 Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
 
+#### **Ответ**
+
+1. Установка aws-cli
+
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+    unzip awscliv2.zip 
+
+    sudo ./aws/install
+    ```bash
+    rkhozyainov@rkh:~$ aws --version
+    aws-cli/2.4.9 Python/3.8.8 Linux/5.11.0-44-generic exe/x86_64.ubuntu.20 prompt/off
+    ```
+2. Вывод aws list configure 
+   ```bash
+    rkhozyainov@rkh:~$ aws configure list --profile terraform
+      Name                    Value             Type    Location
+      ----                    -----             ----    --------
+    profile                terraform           manual    --profile
+    access_key     ****************RXTW shared-credentials-file
+    secret_key     ****************JXlJ shared-credentials-file
+    region                us-west-1      config-file    ~/.aws/config  
+   ```
+3. Политика для terraform
+   ```bash
+        rkhozyainov@rkh:~$ aws iam get-policy --policy-arn arn:aws:iam::009343806228:policy/terraform_policy --profile Administrator
+        {   
+        "Policy": {
+            "PolicyName": "terraform_policy",
+            "PolicyId": "ANPAQELHPFMKHX7RHGOKP",
+            "Arn": "arn:aws:iam::009343806228:policy/terraform_policy",
+            "Path": "/",
+            "DefaultVersionId": "v1",
+            "AttachmentCount": 1,
+            "PermissionsBoundaryUsageCount": 0,
+            "IsAttachable": true,
+            "Description": "test terraform policy",
+            "CreateDate": "2022-01-23T15:02:20+00:00",
+            "UpdateDate": "2022-01-23T15:02:20+00:00",
+            "Tags": []
+            }
+        }
+    ```
 ---
+
 
