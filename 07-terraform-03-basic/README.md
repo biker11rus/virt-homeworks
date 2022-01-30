@@ -62,6 +62,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
         type = "S"
     }
 }
+```
 
 ```bash
 rkhozyainov@rkhozyainov-T530-ubuntu:~/terraform/07-03$ terraform init
