@@ -129,7 +129,8 @@ AWS предоставляет достаточно много бесплатн�
 
 
 Ссылка на репозитории
-  - https://github.com/biker11rus/devops-netology/tree/main/terraform/07-02/yandex
+  - https://github.com/biker11rus/devops-netology/tree/main/terraform/07-02/yc
+
 ---
 
 
