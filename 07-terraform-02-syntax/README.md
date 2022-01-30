@@ -54,7 +54,9 @@ AWS предоставляет достаточно много бесплатн�
  
 ---
 
-### **Ответ**
+## **Ответ**
+
+### **AWS**
 
 1. Установка aws-cli
 
@@ -97,9 +99,37 @@ AWS предоставляет достаточно много бесплатн�
             }
         }
     ```
-Создать свой образ ami можно при помощи packer
-Ссылка на репозиторий - https://github.com/biker11rus/devops-netology/tree/main/terraform/07-02/aws
 
+Ссылка на репозитории
+ - https://github.com/biker11rus/devops-netology/tree/main/terraform/07-02/aws
+
+Создать свой образ ami можно при помощи packer
+
+### **Yandex**
+
+1. Установка CLI
+    ```bash
+    curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
+    ```
+2. Настройка CLI
+    ```bash
+    yc init
+    ```
+3. Создание облака и каталога netology-rkh через web 
+4. Создание сервисного пользователя yc-service
+    ```bash
+    yc iam service-account create --name yc-service
+    ```
+5. Добавление прав сервисному аккаунту 
+
+6. Создание IAM -токена для сервисного аккаунта
+    ```bash
+    yc iam key create --service-account-name yc-service --output key.json
+    ```
+
+
+Ссылка на репозитории
+  - https://github.com/biker11rus/devops-netology/tree/main/terraform/07-02/yandex
 ---
 
 
