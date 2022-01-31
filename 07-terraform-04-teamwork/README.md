@@ -45,8 +45,73 @@
 
 ---
 
-### Как cдавать задание
+## **Ответ**
 
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
+1. Скрин
 
+<p align="center">
+  <img width="1200" height="600" src="./assets/app-terraform.png">
+</p>
+
+2. Ссылки на файлы
+
+    https://github.com/biker11rus/virt-homeworks/blob/virt-11/07-terraform-04-teamwork/server.yaml
+
+    https://github.com/biker11rus/virt-homeworks/blob/virt-11/07-terraform-04-teamwork/atlantis.yaml
+
+3.  Модуль terraform-aws-ec2 - https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/latest
+
+    Использование модуля зависит от задач. Из минусов: не возможно использовать lifecycle
+
+    Пример из занятия "Основы Terraform" задача 2 с использованием модуля без бекэнда и lifecycle
+
+    ```
+    provider "aws" {
+    profile = "terraform"
+    shared_credentials_file = "/home/rkhozyainov/.aws/credentials"
+    region  = "us-west-1"
+    }
+    data "aws_ami" "last-ubuntu" {
+    most_recent = true
+    filter {
+        name   = "name"
+        values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+        }
+    filter {
+        name   = "virtualization-type"
+        values = ["hvm"]
+        }
+    owners = ["099720109477"] # Canonical
+    }
+    locals {
+        instance_type = {
+            stage = "t2.micro"
+            prod = "t2.micro"
+        }
+        instance_count = {
+            stage = 1
+            prod = 2
+        }
+        instances = {
+            "t2.micro" = data.aws_ami.last-ubuntu.id
+            "t2.micro" = data.aws_ami.last-ubuntu.id
+        }
+        }
+    module "ec2_instance" {
+        source  = "terraform-aws-modules/ec2-instance/aws"
+        version = "~> 3.0"
+        count = local.instance_count[terraform.workspace]
+        name = "test-ubuntu"
+        ami                    = data.aws_ami.last-ubuntu.id
+        instance_type          = local.instance_type[terraform.workspace]
+    }
+    module "ec2_instance2" {
+        source  = "terraform-aws-modules/ec2-instance/aws"
+        version = "~> 3.0"
+        for_each = local.instances
+        name = "test-ubuntu-2"
+        ami           = each.value
+        instance_type = each.key
+    }
+    ```
 ---
