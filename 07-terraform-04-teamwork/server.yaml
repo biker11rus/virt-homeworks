@@ -1,0 +1,24 @@
+repos:
+- id: github.com/biker11rus/
+  branch: /.*/
+  apply_requirements: [approved, mergeable]
+  workflow: custom
+  allowed_overrides: [apply_requirements, workflow, delete_source_branch_on_merge]
+  allowed_workflows: [custom]
+  allow_custom_workflows: true
+  delete_source_branch_on_merge: true
+
+# workflows lists server-side custom workflows
+workflows:
+  custom:
+    plan:
+      steps:
+      - run: echo 1 my-custom-command arg1 arg2
+      - init
+      - plan:
+          extra_args: ["-lock", "false"]
+      - run: echo 2 my-custom-command arg1 arg2
+    apply:
+      steps:
+      - run: echo hi
+      - apply
