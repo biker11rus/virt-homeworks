@@ -34,14 +34,82 @@
         fmt.Println(output)    
     }
     ```
+    
+    ### Ответ
+    
+    ```
+    package main
+    import "fmt"
+
+    func main() {
+      fmt.Print("Enter a number of feet: ")
+      var input float64
+
+      fmt.Scanf("%f", &input)
+      output := input * 0.3048
+
+      fmt.Printf( "%.2f %s", output, "м")
+    }    
+    ```
+
  
-1. Напишите программу, которая найдет наименьший элемент в любом заданном списке, например:
+2. Напишите программу, которая найдет наименьший элемент в любом заданном списке, например:
     ```
     x := []int{48,96,86,68,57,82,63,70,37,34,83,27,19,97,9,17,}
     ```
-1. Напишите программу, которая выводит числа от 1 до 100, которые делятся на 3. То есть `(3, 6, 9, …)`.
+    
+    ### Ответ
+    
+    ```
+    package main
+    
+    import "fmt"
+    
+    func main() {
+        x := []int{48,2, 96,86,3,68,57,82,63,70,37,34,83,27,19,97,9,17,1}
+        current := 0
+        fmt.Println ("Список значений : ", x)
+        for i, value := range x {
+            if (i == 0) {
+            current = value 
+            } else {
+                if (value < current){
+                    current = value
+                }
+            }
+        }
+        fmt.Println("Минимальное число : ", current)
+    }    
 
-В виде решения ссылку на код или сам код. 
+    ```
+3. Напишите программу, которая выводит числа от 1 до 100, которые делятся на 3. То есть `(3, 6, 9, …)`.
+
+    ### Ответ
+    ```
+    package main
+
+    import "fmt"
+
+    func Get3val(xmin int, xmax int) []int {
+        var a []int
+
+        for i := xmin; i <= xmax; i++ {
+            if !(i%3 > 0) {
+                a = append(a, i)
+            }
+
+        }
+
+        return a
+    }
+
+    func main() {
+        xmnin := 1
+        xmax := 100
+        outval := Get3val(xmnin, xmax)
+        fmt.Println(outval)
+    }
+    ```
 
 ## Задача 4. Протестировать код (не обязательно).
 
